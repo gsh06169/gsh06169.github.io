@@ -112,13 +112,13 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:gsh06169@gmail.com"
+      url: "mailto:gsh06169@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      # url: "https://gsh06169.github.com"
+      url: "https://gsh06169.github.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/gsh06169"
+      url: "https://github.com/gsh06169"
 
 # Site Footer
 footer:
