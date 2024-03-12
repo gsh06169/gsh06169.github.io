@@ -268,3 +268,5 @@ defaults:
       related: true
       show_date: true
       breadcrumbs: true
+
+date_fromat: %Y-%m-%d
