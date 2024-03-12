@@ -267,4 +267,4 @@ defaults:
       share: true
       related: true
       show_date: true
-      breadcrumb: true
+      breadcrumbs: true
