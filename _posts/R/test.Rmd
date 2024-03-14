@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "kimsieun"
+date: "2024-03-14"
+output: html_document
+---
+
+# 성북구와 중구 미세먼지 농도 상자 그림 그리기
+```{r}
+boxplot(dustdata_anal$성북구, dustdata_anal$중구,
+        main = "finedust_compare", xlab = "AREA", names = c("성북구", "중구"),
+        ylab = "FINEDUST_PM", col = c("blue", "green"))
+```
