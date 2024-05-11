@@ -1,0 +1,1144 @@
+### K-Means를 이용한 붓꽃(Iris) 데이터 셋 Clustering
+
+
+```python
+from sklearn.preprocessing import scale
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+%matplotlib inline
+
+iris = load_iris()
+print('target name:', iris.target_names)
+# 보다 편리한 데이터 Handling을 위해 DataFrame으로 변환
+irisDF = pd.DataFrame(data=iris.data, columns=['sepal_length','sepal_width','petal_length','petal_width'])
+irisDF.head(3)
+```
+
+    target name: ['setosa' 'versicolor' 'virginica']
+    
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+**KMeans 객체를 생성하고 군집화 수행**
+* labels_ 속성을 통해 각 데이터 포인트별로 할당된 군집 중심점(Centroid)확인
+* fit_predict(), fit_transform() 수행 결과 확인. 
+
+
+```python
+kmeans = KMeans(n_clusters=3, init='k-means++', max_iter=300,random_state=0)
+kmeans.fit(irisDF)
+```
+
+
+
+
+    KMeans(n_clusters=3, random_state=0)
+
+
+
+
+```python
+print(kmeans.labels_)
+```
+
+    [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+     1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 2 2 2 0 2 2 2 2
+     2 2 0 0 2 2 2 2 0 2 0 2 0 2 2 0 0 2 2 2 2 2 0 2 2 2 2 0 2 2 2 0 2 2 2 0 2
+     2 0]
+    
+
+
+```python
+kmeans.fit_predict(irisDF)
+```
+
+
+
+
+    array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2,
+           2, 2, 2, 0, 0, 2, 2, 2, 2, 0, 2, 0, 2, 0, 2, 2, 0, 0, 2, 2, 2, 2,
+           2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 0])
+
+
+
+
+```python
+kmeans.fit_transform(irisDF)
+```
+
+
+
+
+    array([[3.41925061, 0.14135063, 5.0595416 ],
+           [3.39857426, 0.44763825, 5.11494335],
+           [3.56935666, 0.4171091 , 5.27935534],
+           [3.42240962, 0.52533799, 5.15358977],
+           [3.46726403, 0.18862662, 5.10433388],
+           [3.14673162, 0.67703767, 4.68148797],
+           [3.51650264, 0.4151867 , 5.21147652],
+           [3.33654987, 0.06618157, 5.00252706],
+           [3.57233779, 0.80745278, 5.32798107],
+           [3.3583767 , 0.37627118, 5.06790865],
+           [3.32449131, 0.4824728 , 4.89806763],
+           [3.31126872, 0.25373214, 4.9966845 ],
+           [3.46661272, 0.50077939, 5.19103612],
+           [3.90578362, 0.91322505, 5.65173594],
+           [3.646649  , 1.01409073, 5.10804455],
+           [3.49427881, 1.20481534, 4.88564095],
+           [3.495248  , 0.6542018 , 5.03090587],
+           [3.38444981, 0.1441527 , 5.02342022],
+           [3.11245944, 0.82436642, 4.61792995],
+           [3.37738931, 0.38933276, 4.97213426],
+           [3.07471224, 0.46344363, 4.6955761 ],
+           [3.31506588, 0.3286031 , 4.9236821 ],
+           [3.93167253, 0.64029681, 5.59713396],
+           [3.01233762, 0.38259639, 4.68193765],
+           [3.06241269, 0.48701129, 4.75095704],
+           [3.19414543, 0.45208406, 4.90772894],
+           [3.17967089, 0.20875823, 4.84545508],
+           [3.30941724, 0.21536016, 4.93969029],
+           [3.37648183, 0.21066561, 5.01833618],
+           [3.31272968, 0.40838707, 5.02954567],
+           [3.26550651, 0.41373905, 4.98608729],
+           [3.18083736, 0.42565244, 4.79550372],
+           [3.53142353, 0.71552778, 5.06520776],
+           [3.57102821, 0.91977171, 5.04438334],
+           [3.31992769, 0.34982853, 5.02985959],
+           [3.56904033, 0.35039977, 5.25071556],
+           [3.43783276, 0.52685861, 5.02368214],
+           [3.53114948, 0.25686572, 5.17865184],
+           [3.66205264, 0.76077592, 5.40750095],
+           [3.31092773, 0.11480418, 4.9664149 ],
+           [3.49764675, 0.18541845, 5.14520862],
+           [3.60850034, 1.24803045, 5.38423754],
+           [3.68120561, 0.6690142 , 5.40847417],
+           [3.14278239, 0.38675574, 4.78803478],
+           [3.00585191, 0.60231221, 4.59828494],
+           [3.39468045, 0.48205809, 5.11844067],
+           [3.32788568, 0.41034132, 4.92421655],
+           [3.51879523, 0.47199576, 5.23766854],
+           [3.34104251, 0.40494444, 4.92859681],
+           [3.40601705, 0.14959947, 5.08216833],
+           [1.22697525, 3.98049997, 1.25489071],
+           [0.684141  , 3.57731464, 1.44477759],
+           [1.17527644, 4.13366423, 1.01903626],
+           [0.73153652, 3.01144152, 2.45978458],
+           [0.63853451, 3.74779669, 1.3520017 ],
+           [0.26937898, 3.34908644, 1.88009327],
+           [0.76452634, 3.74283048, 1.28902785],
+           [1.58388575, 2.23937045, 3.37155487],
+           [0.75582717, 3.71181627, 1.41123804],
+           [0.85984838, 2.8005678 , 2.58955659],
+           [1.53611907, 2.60022691, 3.27864111],
+           [0.32426175, 3.17042268, 1.90055758],
+           [0.80841374, 3.08317693, 2.38073698],
+           [0.39674141, 3.64581678, 1.45909603],
+           [0.87269542, 2.51268382, 2.60303733],
+           [0.87306498, 3.59732957, 1.50822767],
+           [0.41229163, 3.36719171, 1.85387593],
+           [0.53579956, 2.94753796, 2.25517257],
+           [0.6367639 , 3.70615434, 1.74778451],
+           [0.71254917, 2.80841236, 2.49557781],
+           [0.7093731 , 3.79583719, 1.37094403],
+           [0.46349013, 3.02383531, 2.06563694],
+           [0.69373966, 3.99098735, 1.29106776],
+           [0.43661144, 3.60360653, 1.57547425],
+           [0.54593856, 3.37448959, 1.70495043],
+           [0.74313017, 3.56196294, 1.52298639],
+           [0.98798453, 4.01083283, 1.18965415],
+           [1.06739835, 4.20528001, 0.84636259],
+           [0.21993519, 3.47401497, 1.61913335],
+           [1.0243726 , 2.42676328, 2.77868071],
+           [0.86396528, 2.73795179, 2.6440625 ],
+           [0.97566381, 2.62259032, 2.75566654],
+           [0.55763082, 2.83096803, 2.32254696],
+           [0.73395781, 4.07263797, 1.22324554],
+           [0.57500396, 3.33772078, 1.9942056 ],
+           [0.68790275, 3.47153856, 1.61049622],
+           [0.92700552, 3.87741924, 1.19803047],
+           [0.61459444, 3.56224367, 1.81572464],
+           [0.50830256, 2.93359506, 2.20430516],
+           [0.6291191 , 2.94237659, 2.40438484],
+           [0.48790256, 3.23598208, 2.14635877],
+           [0.38266958, 3.5438369 , 1.52402278],
+           [0.49185351, 2.94407541, 2.26286106],
+           [1.5485635 , 2.28455247, 3.33648305],
+           [0.3856087 , 3.08064604, 2.16211718],
+           [0.44284695, 3.01190637, 2.11299567],
+           [0.3449879 , 3.0607156 , 2.07973003],
+           [0.37241653, 3.29690461, 1.76829182],
+           [1.66064034, 1.99117553, 3.44291999],
+           [0.38393196, 2.99098312, 2.16527941],
+           [2.0445799 , 5.23113563, 0.77731871],
+           [0.85382472, 4.13898297, 1.29757391],
+           [2.05245342, 5.26319105, 0.30610139],
+           [1.33089245, 4.63585807, 0.65293923],
+           [1.72813078, 5.00515534, 0.38458885],
+           [2.87401886, 6.06204421, 1.14225684],
+           [1.07101875, 3.49513662, 2.4108337 ],
+           [2.39730707, 5.6002125 , 0.78573677],
+           [1.67668563, 4.9963967 , 0.65454939],
+           [2.54158648, 5.60667281, 0.8435596 ],
+           [1.17541367, 4.31225927, 0.74552218],
+           [1.13563278, 4.46533089, 0.75289837],
+           [1.59322675, 4.81086063, 0.25958095],
+           [0.88917352, 4.11543193, 1.48572618],
+           [1.20227628, 4.34736472, 1.30303821],
+           [1.42273608, 4.57650303, 0.68288333],
+           [1.33403966, 4.59734489, 0.50991553],
+           [3.20105585, 6.21697515, 1.47791217],
+           [3.20759942, 6.46018421, 1.52971038],
+           [0.82617494, 4.07258886, 1.53708992],
+           [1.91251832, 5.08121836, 0.26952816],
+           [0.81891975, 3.95519658, 1.5334904 ],
+           [2.9794431 , 6.17779734, 1.31149299],
+           [0.74269596, 4.05452587, 1.10668455],
+           [1.75847731, 4.92787784, 0.27627819],
+           [2.14580999, 5.27958142, 0.52766931],
+           [0.62526165, 3.92137476, 1.20765678],
+           [0.70228926, 3.95155412, 1.16212743],
+           [1.4663925 , 4.78518338, 0.54629196],
+           [1.93773659, 5.06442297, 0.59428255],
+           [2.31885342, 5.51111422, 0.7312665 ],
+           [3.07340053, 5.99783127, 1.43802246],
+           [1.51444141, 4.8248088 , 0.5605572 ],
+           [0.81536685, 4.10808715, 1.05631592],
+           [1.23209127, 4.50967626, 1.12133058],
+           [2.6381171 , 5.75940796, 0.95311851],
+           [1.72401927, 4.84127876, 0.73306362],
+           [1.31541133, 4.557541  , 0.57903109],
+           [0.61011676, 3.83775716, 1.29960041],
+           [1.60532899, 4.7581488 , 0.34794609],
+           [1.77481954, 4.97393004, 0.3893492 ],
+           [1.53937059, 4.59878027, 0.68403844],
+           [0.85382472, 4.13898297, 1.29757391],
+           [2.00764279, 5.21394093, 0.30952112],
+           [1.94554509, 5.09187392, 0.50939919],
+           [1.44957743, 4.60916261, 0.61173881],
+           [0.89747884, 4.21767471, 1.10072376],
+           [1.17993324, 4.41184542, 0.65334214],
+           [1.50889317, 4.59925864, 0.83572418],
+           [0.83452741, 4.0782815 , 1.1805499 ]])
+
+
+
+### 군집화 결과를 irisDF에 'cluster' 컬럼으로 추가하고 target 값과 결과 비교
+
+
+```python
+iris.target, iris.target_names
+```
+
+
+
+
+    (array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
+     array(['setosa', 'versicolor', 'virginica'], dtype='<U10'))
+
+
+
+
+```python
+irisDF['target'] = iris.target
+irisDF['cluster']=kmeans.labels_
+irisDF.head(10)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>target</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4.6</td>
+      <td>3.4</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4.4</td>
+      <td>2.9</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+irisDF['target'] = iris.target
+irisDF['cluster']=kmeans.labels_
+
+iris_result = irisDF.groupby(['target','cluster'])['sepal_length'].count()
+print(iris_result)
+```
+
+    target  cluster
+    0       1          50
+    1       0          48
+            2           2
+    2       0          14
+            2          36
+    Name: sepal_length, dtype: int64
+    
+
+**2차원 평면에 데이터 포인트별로 군집화된 결과를 나타내기 위해 2차원 PCA값으로 각 데이터 차원축소**
+
+
+```python
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components=2)
+pca_transformed = pca.fit_transform(iris.data)
+
+irisDF['pca_x'] = pca_transformed[:,0]
+irisDF['pca_y'] = pca_transformed[:,1]
+irisDF.head(3)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>target</th>
+      <th>cluster</th>
+      <th>pca_x</th>
+      <th>pca_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.684126</td>
+      <td>0.319397</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.714142</td>
+      <td>-0.177001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.888991</td>
+      <td>-0.144949</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+irisDF.head(10)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>target</th>
+      <th>cluster</th>
+      <th>pca_x</th>
+      <th>pca_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.684126</td>
+      <td>0.319397</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.714142</td>
+      <td>-0.177001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.888991</td>
+      <td>-0.144949</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.745343</td>
+      <td>-0.318299</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.728717</td>
+      <td>0.326755</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.4</td>
+      <td>3.9</td>
+      <td>1.7</td>
+      <td>0.4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.280860</td>
+      <td>0.741330</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4.6</td>
+      <td>3.4</td>
+      <td>1.4</td>
+      <td>0.3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.820538</td>
+      <td>-0.089461</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>5.0</td>
+      <td>3.4</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.626145</td>
+      <td>0.163385</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4.4</td>
+      <td>2.9</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.886383</td>
+      <td>-0.578312</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>4.9</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-2.672756</td>
+      <td>-0.113774</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+# cluster 값이 0, 1, 2 인 경우마다 별도의 Index로 추출
+marker0_ind = irisDF[irisDF['cluster']==0].index
+marker1_ind = irisDF[irisDF['cluster']==1].index
+marker2_ind = irisDF[irisDF['cluster']==2].index
+
+# cluster값 0, 1, 2에 해당하는 Index로 각 cluster 레벨의 pca_x, pca_y 값 추출. o, s, ^ 로 marker 표시
+plt.scatter(x=irisDF.loc[marker0_ind,'pca_x'], y=irisDF.loc[marker0_ind,'pca_y'], marker='o') 
+plt.scatter(x=irisDF.loc[marker1_ind,'pca_x'], y=irisDF.loc[marker1_ind,'pca_y'], marker='s')
+plt.scatter(x=irisDF.loc[marker2_ind,'pca_x'], y=irisDF.loc[marker2_ind,'pca_y'], marker='^')
+
+plt.xlabel('PCA 1')
+plt.ylabel('PCA 2')
+plt.title('3 Clusters Visualization by 2 PCA Components')
+plt.show()
+
+```
+
+
+    
+![png](output_14_0.png)
+    
+
+
+
+```python
+plt.scatter(x=irisDF.loc[:, 'pca_x'], y=irisDF.loc[:, 'pca_y'], c=irisDF['cluster']) 
+```
+
+
+
+
+    <matplotlib.collections.PathCollection at 0x256d2570fd0>
+
+
+
+
+    
+![png](output_15_1.png)
+    
+
+
+### Clustering 알고리즘 테스트를 위한 데이터 생성 
+
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+%matplotlib inline
+
+X, y = make_blobs(n_samples=200, n_features=2, centers=3, cluster_std=0.8, random_state=0)
+print(X.shape, y.shape)
+
+# y target 값의 분포를 확인
+unique, counts = np.unique(y, return_counts=True)
+print(unique,counts)
+```
+
+    (200, 2) (200,)
+    [0 1 2] [67 67 66]
+    
+
+* n_samples: 생성할 총 데이터의 개수입니다. 디폴트는 100개입니다.  
+
+
+* n_features: 데이터의 피처 개수입니다. 시각화를 목표로 할 경우 2개로 설정해 보통 첫 번째 피처는 x 좌표, 두 번째 피처
+는 y 좌표상에 표현합니다.  
+
+
+* centers: int 값, 예를 들어 3으로 설정하면 군집의 개수를 나타냅니다. 그렇지 않고 ndarray 형태로 표현할 경우 개별 군
+집 중심점의 좌표를 의미합니다.  
+
+
+* cluster_std: 생성될 군집 데이터의 표준 편차를 의미합니다. 만일 float 값 0.8과 같은 형태로 지정하면 군집 내에서 데이
+터가 표준편차 0.8을 가진 값으로 만들어집니다.   
+[0.8, 1,2, 0.6]과 같은 형태로 표현되면 3개의 군집에서 첫 번째 군집 내
+데이터의 표준편차는 0.8, 두 번째 군집 내 데이터의 표준 편차는 1.2, 세 번째 군집 내 데이터의 표준편차는 0.6으로 만듭
+니다.   
+군집별로 서로 다른 표준 편차를 가진 데이터 세트를 만들 때 사용합니다  
+
+
+```python
+import pandas as pd
+
+clusterDF = pd.DataFrame(data=X, columns=['ftr1', 'ftr2'])
+clusterDF['target'] = y
+clusterDF.head(10)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ftr1</th>
+      <th>ftr2</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.692427</td>
+      <td>3.622025</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.697940</td>
+      <td>4.428867</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.100228</td>
+      <td>4.606317</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.448724</td>
+      <td>3.384245</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.214861</td>
+      <td>5.364896</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-0.908302</td>
+      <td>1.970778</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2.472119</td>
+      <td>0.437033</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.656842</td>
+      <td>2.441289</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.077800</td>
+      <td>4.625379</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>-1.679427</td>
+      <td>2.602003</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+**make_blob()으로 만들어진 데이터 포인트들을 시각화**
+
+
+```python
+target_list = np.unique(y)
+# 각 target별 scatter plot 의 marker 값들. 
+markers=['o', 's', '^', 'P','D','H','x']
+# 3개의 cluster 영역으로 구분한 데이터 셋을 생성했으므로 target_list는 [0,1,2]
+# target==0, target==1, target==2 로 scatter plot을 marker별로 생성. 
+for target in target_list:
+    target_cluster = clusterDF[clusterDF['target']==target]
+    plt.scatter(x=target_cluster['ftr1'], y=target_cluster['ftr2'], edgecolor='k', marker=markers[target] )
+plt.show()
+```
+
+
+    
+![png](output_21_0.png)
+    
+
+
+
+```python
+target_list = np.unique(y)
+plt.scatter(x=clusterDF['ftr1'], y=clusterDF['ftr2'], edgecolor='k', c=y )
+```
+
+
+
+
+    <matplotlib.collections.PathCollection at 0x256d32e3a60>
+
+
+
+
+    
+![png](output_22_1.png)
+    
+
+
+
+```python
+clusterDF
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ftr1</th>
+      <th>ftr2</th>
+      <th>target</th>
+      <th>kmeans_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.692427</td>
+      <td>3.622025</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.697940</td>
+      <td>4.428867</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.100228</td>
+      <td>4.606317</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.448724</td>
+      <td>3.384245</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.214861</td>
+      <td>5.364896</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>2.956576</td>
+      <td>0.033718</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>-2.074113</td>
+      <td>4.245523</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>2.783411</td>
+      <td>1.151438</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>1.226724</td>
+      <td>3.620511</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>1.474790</td>
+      <td>-0.209028</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>200 rows × 4 columns</p>
+</div>
+
+
+
+**K-Means 클러스터링을 수행하고 개별 클러스터의 중심 위치를 시각화**
+
+
+```python
+kmeans.cluster_centers_
+```
+
+
+
+
+    array([[ 0.990103  ,  4.44666506],
+           [-1.70636483,  2.92759224],
+           [ 1.95763312,  0.81041752]])
+
+
+
+
+```python
+# KMeans 객체를 이용하여 X 데이터를 K-Means 클러스터링 수행 
+kmeans = KMeans(n_clusters=3, init='k-means++', max_iter=200, random_state=0)
+cluster_labels = kmeans.fit_predict(X)
+clusterDF['kmeans_label']  = cluster_labels
+
+#cluster_centers_ 는 개별 클러스터의 중심 위치 좌표 시각화를 위해 추출
+centers = kmeans.cluster_centers_
+unique_labels = np.unique(cluster_labels)
+markers=['o', 's', '^', 'P','D','H','x']
+
+# 군집된 label 유형별로 iteration 하면서 marker 별로 scatter plot 수행. 
+for label in unique_labels:
+    label_cluster = clusterDF[clusterDF['kmeans_label']==label]
+    plt.scatter(x=label_cluster['ftr1'], y=label_cluster['ftr2'], edgecolor='k', 
+                marker=markers[label] )
+    
+    center_x_y = centers[label]
+    
+    # 군집별 중심 위치 좌표 시각화 
+    plt.scatter(x=center_x_y[0], y=center_x_y[1], s=200, color='white',
+                alpha=0.9, edgecolor='k', marker=markers[label])
+    plt.scatter(x=center_x_y[0], y=center_x_y[1], s=70, color='k', edgecolor='k', 
+                marker='$%d$' % label)
+
+plt.show()
+```
+
+
+    
+![png](output_26_0.png)
+    
+
+
+
+```python
+target_list = np.unique(y)
+plt.scatter(x=clusterDF['ftr1'], y=clusterDF['ftr2'], edgecolor='k', c=y )
+```
+
+
+
+
+    <matplotlib.collections.PathCollection at 0x256d3463ca0>
+
+
+
+
+    
+![png](output_27_1.png)
+    
+
+
+
+```python
+kmeans.cluster_centers_
+```
+
+
+
+
+    array([[ 0.990103  ,  4.44666506],
+           [-1.70636483,  2.92759224],
+           [ 1.95763312,  0.81041752]])
+
+
+
+
+```python
+print(clusterDF.groupby('target')['kmeans_label'].value_counts())
+```
+
+    target  kmeans_label
+    0       0               66
+            1                1
+    1       2               67
+    2       1               65
+            2                1
+    Name: kmeans_label, dtype: int64
+    
+
+
+```python
+
+```
+
+
+```python
+
+```
