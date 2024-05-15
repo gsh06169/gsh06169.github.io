@@ -1,3 +1,32 @@
+---
+title: "[Python 머신러닝] 07-3 평균 이동"
+
+categories: 
+  - PYTHON
+tags:
+  - [Python, 프로그래밍, 머신러닝, 공부]
+
+toc: true
+toc_sticky: true
+---
+
+# 군집화
+
+
+## 평균 이동
+
+
+
+### 평균 이동(Mean Shift)의 개요
+
+
+
+
+
+
+
+
+
 ### KDE(Kernel Density Estimation)의 이해
 
 **seaborn의 distplot()을 이용하여 KDE 시각화**  
