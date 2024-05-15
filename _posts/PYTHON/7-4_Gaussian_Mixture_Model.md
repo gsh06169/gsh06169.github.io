@@ -1,3 +1,42 @@
+---
+title: "[Python 머신러닝] 07-4 GMM(Gaussian Mixture Model)"
+
+categories: 
+  - PYTHON
+tags:
+  - [Python, 프로그래밍, 머신러닝, 공부]
+
+toc: true
+toc_sticky: true
+---
+
+# 군집화
+
+## GMM(Gaussian Mixture Model)
+
+
+
+### GMM(Gaussian Mixture Model) 소개
+
+
+
+### GMM을 이용한 붓꽃 데이터 세트 군집화
+
+
+
+### GMM과 K-평균의 비교
+
+
+
+
+
+
+
+
+
+
+
+
 ### GMM 을 이용한 붓꽃 데이터 셋 클러스터링
 
 
