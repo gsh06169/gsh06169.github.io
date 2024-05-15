@@ -1,3 +1,33 @@
+---
+title: "[Python 머신러닝] 07-01 K-평균 알고리즘 이해"
+
+categories: 
+  - PYTHON
+tags:
+  - [Python, 프로그래밍, 머신러닝, 공부]
+
+toc: true
+toc_sticky: true
+---
+
+# 군집화
+
+## K-평균 알고리즘 이해
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### K-Means를 이용한 붓꽃(Iris) 데이터 셋 Clustering
 
 
